@@ -9,19 +9,6 @@ use App\Models\ButtonStatuses;
 
 class ButtonController extends Controller
 {
-    // BUTTON LOGS
-    public function index(Request $request){
-
-        $button         = $request->button;
-
-        $btn_logs       = ButtonLogs::orderBy('id', 'desc')
-                                    ->where('button_name', 'like', '%'.$button.'%')
-                                    ->paginate(15);
-
-        return view('button_log',[
-            'btn_logs' => $btn_logs
-        ]);
-    }
 
 
     // BUTTON STATUS LOGS

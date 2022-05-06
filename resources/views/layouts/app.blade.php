@@ -143,6 +143,8 @@
             alertify.success(msg);
         }
     </script>
+
+    @yield('javascript')
 </body>
 
 </html>
