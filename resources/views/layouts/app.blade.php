@@ -39,21 +39,26 @@
                     <i class="fas fa-infinity"></i> Arduino Nodes
                 </a>
 
-                <a href="{{ route('button.list') }}" class="dash-nav-item">
-                    <i class="fas fa-toggle-on"></i> Button Actions
-                </a>
 
-                {{-- <div class="dash-nav-dropdown">
-                    <a href="#!" class="dash-nav-item dash-nav-dropdown-toggle">
-                        <i class="fas fa-gear"></i> Node List
-                    </a>
-                    <div class="dash-nav-dropdown-menu">
-                        <a href="" class="dash-nav-dropdown-item"> node 1</a>
+
+                @if (Auth::user()->role == "admin")
+
+                    @php if (!isset($config_show)) $config_show = ''; @endphp
+
+                    <div class="dash-nav-dropdown {{ $config_show }}">
+                        <a href="#!" class="dash-nav-item dash-nav-dropdown-toggle">
+                            <i class="fas fa-gear"></i> Configurations
+                        </a>
+                        <div class="dash-nav-dropdown-menu">
+                            <a href="{{ route('user.list') }}" class="dash-nav-dropdown-item"> Users</a>
+                        </div>
+                        <div class="dash-nav-dropdown-menu">
+                            <a href="{{ route('button.list') }}" class="dash-nav-dropdown-item">
+                                Button Actions
+                            </a>
+                        </div>
                     </div>
-                    <div class="dash-nav-dropdown-menu">
-                        <a href="chartjs.html" class="dash-nav-dropdown-item"> node 2</a>
-                    </div>
-                </div> --}}
+                @endif
 
             </nav>
         </div>
@@ -73,10 +78,10 @@
                 <div class="tools">
                     <div class="dropdown ">
                         <a href="#" class="" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            {{-- {{ Auth::user()->name }} <i class="fas fa-user"></i> --}}
+                            {{ Auth::user()->name }} <i class="fas fa-user"></i>
                         </a>
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenu1">
-                            <a class="dropdown-item" href="#!">Profile</a>
+                            {{-- <a class="dropdown-item" href="#!">Profile</a> --}}
                             <a class="dropdown-item" href="<?php echo e(route('logout')); ?>"
                                 onclick="event.preventDefault();
                                               document.getElementById('logout-form').submit();">
@@ -109,6 +114,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.21.0/moment.min.js" type="text/javascript"></script>
     <script src="../js/bootstrap-datetimepicker.min.js"></script>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.1/chart.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
 
     <script type="text/javascript">
        $(function () {
@@ -119,9 +126,8 @@
 
             });
 
-            $('#datepicker').datetimepicker({
+            $('.date').datetimepicker({
                 format: 'YYYY-MM-DD'
-
             });
 
 

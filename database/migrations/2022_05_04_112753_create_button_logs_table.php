@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('arduino_name');
             $table->string('button_status');
+            $table->string('button_pin');
             $table->string('status_value');
             $table->timestamps();
         });

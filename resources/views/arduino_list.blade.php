@@ -6,9 +6,11 @@
 <div class="row">
     <div class="col-lg-12 mb-3">
         <form action="{{ route('arduino.list') }}" method="get">
-            <a href="{{ route('arduino.form') }}" class="btn btn-warning float-start">
-                <i class="fa fa-plus-circle" aria-hidden="true"></i> Add
-            </a>
+            @if (Auth::user()->role == "admin")
+                <a href="{{ route('arduino.form') }}" class="btn btn-warning float-start">
+                    <i class="fa fa-plus-circle" aria-hidden="true"></i> Add
+                </a>
+            @endif
 
             {{-- <button type="button" class="btn btn-success pull-right"  data-toggle="modal" data-target="#excel_export_modal">
                 <i class="fa fa-file-excel-o" aria-hidden="true"></i> Excel
@@ -44,8 +46,10 @@
                             <th scope="col">Arduino Name</th>
                             <th scope="col">Arduino IP</th>
                             <th scope="col">Comment</th>
-                            <th scope="col">Action</th>
-                            <th scope="col">Show</th>
+                            <th scope="col">View</th>
+                            @if (Auth::user()->role == "admin")
+                                <th scope="col">Action</th>
+                            @endif
                         </tr>
                     </thead>
                     <tbody>
@@ -57,12 +61,22 @@
                                 <td class="align-middle">{{ $arduino->comment }}</td>
 
                                 <td class="align-left" width='20%'>
+<<<<<<< HEAD
                                     <a class="btn btn-outline-primary mb-1 btn-sm waves-effect" href="button-log/{{ $arduino->arduino_name }}"><i class="fa fas fa-clock" aria-hidden="true"></i> Button Log</a>
                                     <a class="btn btn-info mb-1 btn-sm waves-effect" href="presure-log/{{ $arduino->arduino_name }}"><i class="fa fas fa-chart-bar" aria-hidden="true"></i> Presure Log</a>
                                 </td>
                                 <td class="align-left" width='10%'>
                                     <a class="btn btn-secondary mb-1 btn-sm waves-effect" href="arduino-form/{{ $arduino->id }}"><i class="fa fas fa-edit" aria-hidden="true"></i> Edit</a>
+=======
+                                    <a class="btn btn-outline-primary mb-1 btn-sm waves-effect" href="/button-log/{{ $arduino->arduino_name }}"><i class="fa fas fa-clock" aria-hidden="true"></i> Button Log</a>
+                                    <a class="btn btn-info mb-1 btn-sm waves-effect" href="/presure-log/{{ $arduino->arduino_name }}"><i class="fa fas fa-chart-bar" aria-hidden="true"></i> Presure Log</a>
+>>>>>>> d4881665874791e20a2d1ae4d1fceb37b8d2e233
                                 </td>
+                                @if (Auth::user()->role == "admin")
+                                    <td class="align-left" width='10%'>
+                                        <a class="btn btn-secondary mb-1 btn-sm waves-effect" href="arduino-form/{{ $arduino->id }}"><i class="fa fas fa-edit" aria-hidden="true"></i> Edit</a>
+                                    </td>
+                                @endif
                             </tr>
                         @endforeach
                     </tbody>

@@ -7,7 +7,7 @@
     <div class="col-lg-12 mb-3">
 
         <a href={{ route("user.form") }} class="btn btn-warning float-start">
-            <i class="fa fa-plus-circle" aria-hidden="true"></i> დამატება
+            <i class="fa fa-plus-circle" aria-hidden="true"></i> Add
         </a>
         {{-- <button type="button" class="btn btn-success pull-right"  data-toggle="modal" data-target="#excel_export_modal">
             <i class="fa fa-file-excel-o" aria-hidden="true"></i> Excel
@@ -20,12 +20,12 @@
     {{-- @csrf --}}
     <div class="row mb-3">
         <div class="col-md-2">
-            <input type="text" name="name" class="form-control" id="name" placeholder="მომხმარებლის სახელი">
+            <input type="text" name="name" class="form-control" id="name" placeholder="username">
         </div>
 
         <div class="col-md-2">
             <button type="submit" class="btn btn-outline-primary">
-                <i class="fa fa-search" aria-hidden="true"></i> ძებნა
+                <i class="fa fa-search" aria-hidden="true"></i> Search
             </button>
         </div>
     </div>
@@ -40,18 +40,19 @@
                 <div class="easion-card-icon">
                     <i class="fas fa-table"></i>
                 </div>
-                <div class="easion-card-title">რეგისტრაციის სია</div>
+                <div class="easion-card-title">User List</div>
             </div>
             <div class="card-body ">
                 <table class="table table-hover table-in-card table-sm">
                     <thead>
                         <tr>
                             <th scope="col">#</th>
-                            <th scope="col">მომხმარებლის სახელი</th>
-                            <th scope="col">იმეილი</th>
-                            <th scope="col">როლი</th>
-                            <th scope="col">დამატების თარიღი</th>
-                            <th scope="col">ოპერირება</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Username</th>
+                            <th scope="col">Email</th>
+                            <th scope="col">Role</th>
+                            <th scope="col">Add Date</th>
+                            <th scope="col">Action</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -68,11 +69,12 @@
                             <tr class="{{ $color }}">
                                 <th scope="row" class="align-middle">{{ $user->id }}</th>
                                 <td class="align-middle">{{ $user->name }}</td>
+                                <td class="align-middle">{{ $user->username }}</td>
                                 <td class="align-middle">{{ $user->email }}</td>
                                 <td class="align-middle">{{ $user->role }}</td>
                                 <td class="align-middle">{{ $user->created_at }}</td>
                                 <td class="align-middle">
-                                    <a class="btn btn-secondary mb-1 btn-sm" href="{{ route('user.form', ['id' => $user->id] ) }}"><i class="fa fas fa-edit" aria-hidden="true"></i> ნახვა</a>
+                                    <a class="btn btn-secondary mb-1 btn-sm" href="{{ route('user.form', ['id' => $user->id] ) }}"><i class="fa fas fa-edit" aria-hidden="true"></i> View</a>
                                 </td>
                             </tr>
                         @endforeach

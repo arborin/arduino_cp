@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Arduinos;
+use App\Models\ButtonLogs;
+use App\Models\ButtonStatuses;
+use App\Models\PresureLogs;
 use Illuminate\Http\Request;
 use Str;
 
@@ -58,8 +61,45 @@ class ArduinoController extends Controller
             ]);
         }
 
-        return redirect(route('arduino.list'));
+        return redirect(route('arduino.list'))->with('message','Success!');
     }
+
+
+    public function getButtonRequest(Request $request){
+        $arduino_name           = $request->name;
+        $btn                    = $request->btn;
+        $btn_value              = $request->btn_val;
+
+        $btn_status             = ButtonStatuses::where('button_pin', $btn)->where('button_val', $btn_value)->first();
+
+        $action                 = (!is_null($btn_status)) ? $btn_status->action_name : "NOT CONFIGURED";
+
+        ButtonLogs::create([
+                            'arduino_name'      => $arduino_name,
+                            'button_status'     => $action,
+                            'status_value'      => $btn_value,
+                            'button_pin'        => $btn
+                        ]);
+
+        return '#OK';
+    }
+
+    public function getPresureValue(Request $request){
+
+        $arduino_name           = $request->name;
+        $value                  = $request->value;
+
+
+
+        PresureLogs::create([
+                            'arduino_name'      => $arduino_name,
+                            'presure_value'     => $value
+                        ]);
+
+        return '#OK';
+    }
+
+
 
 
 }
