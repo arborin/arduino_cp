@@ -13,7 +13,7 @@
                 <div class="easion-card-icon">
                     <i class="fas fa-user"></i>
                 </div>
-                <div class="easion-card-title"> მომხმარებლის დამატება </div>
+                <div class="easion-card-title"> User Form </div>
             </div>
             <div class="card-body">
                 <form action='{{ route('user.save') }}' method="post">
@@ -22,16 +22,24 @@
                     <input type="hidden" name='id' value="{{ isset($user) ? $user['id'] : '' }}" class="form-control" id="id" placeholder="">
 
                     <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="name">Name</label>
+                                <input type="text"  name="name" value="{{ isset($user['name']) ? $user['name'] : '' }}" required class="form-control" id="name"  placeholder="">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="name">მომხმარებლის სახელი</label>
-                                <input type="text"  name="name" value="{{ isset($user['name']) ? $user['name'] : '' }}" required class="form-control" id="name"  placeholder="">
+                                <label for="name">User Name</label>
+                                <input type="text"  name="username" value="{{ isset($user['username']) ? $user['username'] : '' }}" required class="form-control" id="name"  placeholder="">
                             </div>
                         </div>
 
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="email">იმეილი</label>
+                                <label for="email">Email</label>
                                 <div class="input-group-prepend">
                                     <span class="input-group-text" id="basic-addon"><i class="fa fa-envelope" aria-hidden="true"></i></span>
                                     <input type="email" name="email" value="{{ isset($user) ? $user->email : '' }}" required class="form-control">
@@ -46,7 +54,7 @@
                         <div class="col-md-6">
                             <div class="form-group">
 
-                                <label for="exampleFormControlInput1">როლი</label>
+                                <label for="exampleFormControlInput1">Role</label>
 
                                 @php $role = isset($user) ? $user->role : '' @endphp
 
@@ -60,10 +68,10 @@
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="password">პაროლი</label>
+                                <label for="password">Password</label>
                                 <div class="input-group-prepend">
                                     <span class="input-group-text" id="basic-addon"><i class="fa fa-key" aria-hidden="true"></i></span>
-                                    <input type="text" name="password" value="" class="form-control" id="password" placeholder="">
+                                    <input type="password" name="password" value="" class="form-control" id="password" placeholder="">
                                 </div>
                             </div>
                         </div>
@@ -72,11 +80,11 @@
                     <div class="form-group row">
                         <div class="col-sm-12">
                             <button type="button" class="btn btn-outline-danger" data-toggle="modal" data-target="#delete-user-alert">
-                                წაშლა <i class="fas fa-trash-alt" aria-hidden="true"></i>
+                                Delete <i class="fas fa-trash-alt" aria-hidden="true"></i>
                             </button>
 
-                            <button type="submit" class="btn btn-primary pull-right ml-3">შენახვა</button>
-                            <a href="" class="btn btn-secondary pull-right">უკან</a>
+                            <button type="submit" class="btn btn-primary pull-right ml-3">Save</button>
+                            <a href="" class="btn btn-secondary pull-right">Back</a>
 
                         </div>
                     </div>

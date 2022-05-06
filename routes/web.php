@@ -22,7 +22,7 @@ use APP\Http\Middleware\VerifyAdminAccess;
 
 
 Route::get('/', function () {
-    return redirect('/dashboard');
+    return redirect('/login');
 });
 
 
@@ -53,10 +53,10 @@ Route::controller(DashboardController::class)->group(function (){
 // });
 
 
-// Route::get('/user-list', [UserController::class, 'userList'])->name('user.list');
-// Route::get('/user-form/{id?}', [UserController::class, 'userForm'])->name('user.form');
-// Route::post('/user-delete/', [UserController::class, 'userDelete'])->name('user.delete');
-// Route::post('/user-save/', [UserController::class, 'userSave'])->name('user.save');
+Route::get('/user-list', [UserController::class, 'userList'])->name('user.list');
+Route::get('/user-form/{id?}', [UserController::class, 'userForm'])->name('user.form');
+Route::post('/user-delete/', [UserController::class, 'userDelete'])->name('user.delete');
+Route::post('/user-save/', [UserController::class, 'userSave'])->name('user.save');
 
 // Route::get('/registration-list', function(){
 //     return "HELLO";

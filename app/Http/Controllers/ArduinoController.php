@@ -58,7 +58,7 @@ class ArduinoController extends Controller
             ]);
         }
 
-        return redirect(route('arduino.list'));
+        return redirect(route('arduino.list'))->with('message','Success!');
     }
 
 
