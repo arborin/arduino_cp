@@ -2,19 +2,42 @@
 
 
 @section('content')
+        <form action="" method="get" >
+            <div class="row mb-5">
+                <div class="col-md-3 input-group">
+                    <div class="input-group-prepend">
+                        <label class="input-group-text mr-3" for="inputGroupSelect01">
+                            <a href="{{ route('arduino.list') }}"><i class="fas fa-angle-double-left"></i></a>
+                        </label>
+                    </div>
+                    <div class="input-group-prepend">
+                        <label class="input-group-text bg-warning" for="inputGroupSelect01" >{{ $arduino_name }}</label>
+                    </div>
+                    <select name='button_pin' class="custom-select" id="inputGroupSelect01">
+                        <option disabled selected>-- select pin --</option>
+                        <option value="btn_2" {{ ($btn == 'btn_2') ? 'selected' : '' }}>Button (PIN 2)</option>
+                        <option value="btn_3" {{ ($btn == 'btn_3') ? 'selected' : '' }}>Button (PIN 3)</option>
+                        <option value="btn_5" {{ ($btn == 'btn_5') ? 'selected' : '' }}>Button (PIN 5)</option>
+                        <option value="btn_6" {{ ($btn == 'btn_6') ? 'selected' : '' }}>Button (PIN 6)</option>
+                        <option value="btn_7" {{ ($btn == 'btn_7') ? 'selected' : '' }}>Button (PIN 7)</option>
+                    </select>
+                </div>
 
-<div class="row">
-    <div class="col-lg-12 mb-3">
-        <form action="{{ route('arduino.list') }}" method="get">
+                <div class="col-md-2">
+                    <input type="text" name="date_from" class="form-control date" id="" placeholder="Date (from)">
+                </div>
+                <div class="col-md-2">
+                    <input type="text" name="date_to" class="form-control date" id="" placeholder="Date (to)">
+                </div>
 
-            <button type="submit" class="btn btn-outline-primary pull-right">
-                <i class="fa fa-search" aria-hidden="true"></i> Search
-            </button>
+                <div class="col-md-2 ">
+                    <button type="submit" class="btn btn-primary input-group-append mr-3">Select</button>
+                </div>
 
-            <input type="text" name="arduino_name" style="width:200px" class="form-control pull-right mr-4" id="arduino-name" placeholder="Button">
+            </div>
+
         </form>
-    </div>
-</div>
+
 
 
 
@@ -26,7 +49,8 @@
                 <div class="easion-card-icon">
                     <i class="fas fa-table"></i>
                 </div>
-                <div class="easion-card-title">Arduino {$arduino_name} Buttons Log</div>
+                <div class="easion-card-title">Log</div>
+                <span class="easion-card-menu"><strong>Total: {{ $button_logs->total() }}</strong></span>
             </div>
             <div class="card-body ">
 
@@ -34,25 +58,21 @@
                     <thead>
                         <tr>
                             <th scope="col">#</th>
-                            <th scope="col">Button</th>
-                            <th scope="col">Value</th>
+                            <th scope="col">Arduino Name</th>
+                            <th scope="col">Status</th>
+                            <th scope="col">Button(pin)</th>
+                            <th scope="col">Date</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($buttons as $button)
+                        @foreach ($button_logs as $log)
                             <tr>
-                                <th scope="row" class="align-middle">{{ $arduino->id }}</th>
-                                <td class="align-middle">{{ $arduino->arduino_name }}</td>
-                                <td class="align-middle">{{ $arduino->arduino_ip }}</td>
-                                <td class="align-middle">{{ $arduino->comment }}</td>
+                                <th scope="row" class="align-middle">{{ $log->id }}</th>
+                                <td class="align-middle">{{ $log->arduino_name }}</td>
+                                <td class="align-middle">{{ $log->button_status }}</td>
+                                <td class="align-middle">{{ $log->button_pin }}</td>
+                                <td class="align-middle">{{ $log->created_at }}</td>
 
-                                <td class="align-left" width='20%'>
-                                    <a class="btn btn-outline-primary mb-1 btn-sm waves-effect" href="arduino-form/{{ $arduino->id }}"><i class="fa fas fa-clock" aria-hidden="true"></i> Button Log</a>
-                                    <a class="btn btn-info mb-1 btn-sm waves-effect" href="arduino-form/{{ $arduino->id }}"><i class="fa fas fa-chart-bar" aria-hidden="true"></i> Presure Log</a>
-                                </td>
-                                <td class="align-left" width='10%'>
-                                    <a class="btn btn-secondary mb-1 btn-sm waves-effect" href="arduino-form/{{ $arduino->id }}"><i class="fa fas fa-edit" aria-hidden="true"></i> Edit</a>
-                                </td>
                             </tr>
                         @endforeach
                     </tbody>
@@ -61,7 +81,9 @@
             </div>
         </div>
         <div class="pull-right">
-            {!! $arduinos->links('pagination::bootstrap-4') !!}
+            @if($button_logs)
+                {!! $button_logs->links('pagination::bootstrap-4') !!}
+            @endif
         </div>
     </div>
 </div>

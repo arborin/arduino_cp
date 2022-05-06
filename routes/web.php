@@ -1,14 +1,17 @@
 <?php
 
-use App\Http\Controllers\ArduinoController;
+use App\Models\ButtonLogs;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\ButtonController;
+use APP\Http\Middleware\VerifyAdminAccess;
+use App\Http\Controllers\ArduinoController;
+// use App\Http\Middleware\VerifyAdminAccess;
+use App\Http\Controllers\ButtonLogController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\TruckRegistrationController;
-use App\Http\Controllers\UserController;
-use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Auth;
-// use App\Http\Middleware\VerifyAdminAccess;
-use APP\Http\Middleware\VerifyAdminAccess;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -72,4 +75,7 @@ Route::get('/button-list', [ButtonController::class, 'buttonStatus'] )->name('bu
 Route::get('/button-form/{id?}', [ButtonController::class, 'buttonStatusForm'] )->name('button.form');
 Route::post('/button-save', [ButtonController::class, 'buttonStatusSave'] )->name('buttonAction.save');
 
+
+// Route::get('/button-log/{name}', [ButtonLogController::class, 'showButtonLog'])->name('showButton.log');
+Route::get('/button-log/{name}', [ButtonLogController::class, 'showButtonLog'])->name('showButton.log');
 

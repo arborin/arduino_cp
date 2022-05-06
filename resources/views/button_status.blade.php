@@ -52,15 +52,13 @@
                             <tr>
                                 <th scope="row" class="align-middle">{{ $button->id }}</th>
                                 <td class="align-middle">{{ $button->button_pin }}</td>
-                                <td class="align-middle">{{ $button->button_val }}
-
+                                <td class="align-middle">
+                                        {{-- {{ $button->button_val }} --}}
                                         @if($button->button_val == '1')
                                             <span class='badge badge-pill badge-success'>ON</span>
                                         @elseif($button->button_val == '0')
                                             <span class='badge badge-pill badge-secondary'>OFF</span>
                                         @endif
-
-
                                 </td>
                                 <td class="align-middle">{{ $button->action_name }}</td>
                                 <td class="align-left" width='10%'>

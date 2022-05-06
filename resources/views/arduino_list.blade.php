@@ -61,7 +61,7 @@
                                 <td class="align-middle">{{ $arduino->comment }}</td>
 
                                 <td class="align-left" width='20%'>
-                                    <a class="btn btn-outline-primary mb-1 btn-sm waves-effect" href="arduino-form/{{ $arduino->id }}"><i class="fa fas fa-clock" aria-hidden="true"></i> Button Log</a>
+                                    <a class="btn btn-outline-primary mb-1 btn-sm waves-effect" href="/button-log/{{ $arduino->arduino_name }}"><i class="fa fas fa-clock" aria-hidden="true"></i> Button Log</a>
                                     <a class="btn btn-info mb-1 btn-sm waves-effect" href="arduino-form/{{ $arduino->id }}"><i class="fa fas fa-chart-bar" aria-hidden="true"></i> Presure Log</a>
                                 </td>
                                 @if (Auth::user()->role == "admin")
