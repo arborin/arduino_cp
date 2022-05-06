@@ -8,4 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class PresureLogs extends Model
 {
     use HasFactory;
+
+    protected $fillable = ['arduino_name', 'presure_value'];
 }

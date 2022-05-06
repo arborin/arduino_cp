@@ -114,6 +114,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.21.0/moment.min.js" type="text/javascript"></script>
     <script src="../js/bootstrap-datetimepicker.min.js"></script>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.1/chart.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
 
     <script type="text/javascript">
        $(function () {
@@ -147,6 +149,8 @@
             alertify.success(msg);
         }
     </script>
+
+    @yield('javascript')
 </body>
 
 </html>

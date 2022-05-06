@@ -44,6 +44,12 @@
 
 <div class="row">
     <div class="col-lg-12">
+
+
+        <canvas id="myChart" height='50'></canvas>
+
+
+
         <div class="card easion-card">
             <div class="card-header">
                 <div class="easion-card-icon">
@@ -55,6 +61,9 @@
                     <strong>Total: {{ $total }}</strong></span>
             </div>
             <div class="card-body ">
+
+
+
 
                 <table class="table table-hover table-in-card table-sm">
                     <thead>
@@ -90,5 +99,75 @@
     </div>
 </div>
 
+
+@endsection
+
+
+
+@section('javascript')
+
+<script>
+    function newDate() {
+  return moment().add(days, 'd');
+}
+
+var config = {
+  type: 'line',
+
+  data: {
+    labels: ['00:00:00','01:00:00', '02:00:00','03:00:00', '04:00:00', '05:00:00', '06:00:00','07:00:00','08:00:00','09:00:00','10:00:00','11:00:00',
+    '12:00:00','13:00:00','14:00:00','15:00:00','16:00:00','17:00:00','18:00:00','23:59:59'],
+    datasets: [{
+        fill: true,
+        stepped: true,
+        label: "My First dataset",
+        data: [1, 0, 1, 0, 1, 0, 1,0,1,0,1,0],
+    }],
+
+  },
+    options: {
+        backgroundColor: '#ff8069',
+        scales: {
+            // xAxis:[{
+            //     type: 'time',
+
+            // }],
+            //         type: 'time',
+            //         time: {
+            //             format: "HH:mm",
+            //             unit: 'hour',
+            //             unitStepSize: 1,
+            //             displayFormats: {
+            //             'minute': 'HH:mm',
+            //             'hour': 'HH:mm',
+            //             min: '00:00',
+            //             max: '23:59'
+            //             },
+            //         }
+        // }],
+        x: {
+                type: 'timeseries',
+            },
+            y: {
+            title: {
+            display: true,
+            text: 'Value'
+            },
+            min: 0,
+            max: 1,
+            ticks: {
+            // forces step size to be 50 units
+            stepSize: 1
+            }
+        }
+
+    }
+  }
+};
+
+var ctx = document.getElementById("myChart").getContext("2d");
+new Chart(ctx, config);
+
+</script>
 
 @endsection
