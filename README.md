@@ -1,3 +1,5 @@
-# trcp
+# Arduino Control Panel
 
-trcp laravel project"# arduino_cp" 
+laravel project
+arduino data logger to web page
+
