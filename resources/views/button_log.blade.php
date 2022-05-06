@@ -6,7 +6,7 @@
             <div class="row mb-5">
                 <div class="col-md-3 input-group">
                     <div class="input-group-prepend">
-                        <label class="input-group-text mr-3" for="inputGroupSelect01">
+                        <label class="input-group-text" for="inputGroupSelect01">
                             <a href="{{ route('arduino.list') }}"><i class="fas fa-angle-double-left"></i></a>
                         </label>
                     </div>
@@ -50,7 +50,9 @@
                     <i class="fas fa-table"></i>
                 </div>
                 <div class="easion-card-title">Log</div>
-                <span class="easion-card-menu"><strong>Total: {{ $button_logs->total() }}</strong></span>
+                <span class="easion-card-menu">
+                        @php $total = ($button_logs) ? $button_logs->total() : 0; @endphp
+                    <strong>Total: {{ $total }}</strong></span>
             </div>
             <div class="card-body ">
 
