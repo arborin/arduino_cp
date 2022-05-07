@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use Str;
 use App\Models\Arduinos;
 use App\Models\ButtonLogs;
-use App\Models\ButtonStatuses;
 use App\Models\PresureLogs;
 use Illuminate\Http\Request;
-use Str;
+use App\Models\ButtonStatuses;
+use Illuminate\Support\Facades\Auth;
 
 class ArduinoController extends Controller
 {
@@ -64,11 +65,21 @@ class ArduinoController extends Controller
         return redirect(route('arduino.list'))->with('message','Success!');
     }
 
+    public function deleteArduino(Request $request){
+
+        if( Auth()->user()->role == 'admin'){
+            Arduinos::destroy($request->id);
+            return redirect(route('arduino.list'))->with('message', 'Success!');
+        }else{
+            return redirect(route('arduino.list'))->with('message', 'Error!');
+        }
+    }
+
 
     public function getButtonRequest(Request $request){
         $arduino_name           = $request->name;
         $btn                    = $request->btn;
-        $btn_value              = $request->btn_val;
+        $btn_value              = $request->state;
 
         $btn_status             = ButtonStatuses::where('button_pin', $btn)->where('button_val', $btn_value)->first();
 

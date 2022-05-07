@@ -14,10 +14,10 @@
                     <i class="fas fas fa-power-off"></i>
                 </div>
                 <div class="stats-data">
-                    <div class="stats-number">87</div>
+                    <div class="stats-number" id='btn-today-log'>0</div>
                     <div class="stats-change">
                         <span class="stats-percentage mr-2">Total:</span>
-                        <span class="stats-percentage">2554</span>
+                        <span class="stats-percentage" id='btn-total-log'>0</span>
                     </div>
                 </div>
             </div>
@@ -32,10 +32,10 @@
                     <i class="fas fas fa-tachometer-alt"></i>
                 </div>
                 <div class="stats-data">
-                    <div class="stats-number">100</div>
+                    <div class="stats-number" id='pressure-today-log'>0</div>
                     <div class="stats-change">
                         <span class="stats-percentage mr-2">Total:</span>
-                        <span class="stats-percentage">787945</span>
+                        <span class="stats-percentage" id='pressure-total-log'>0</span>
                     </div>
                 </div>
             </div>
@@ -50,10 +50,10 @@
                     <i class="fas fa-chart-line"></i>
                 </div>
                 <div class="stats-data">
-                    <div class="stats-number">54000</div>
+                    <div class="stats-number" id='total-logs'>0</div>
                     <div class="stats-change">
                         <span class="stats-percentage mr-2">From:</span>
-                        <span class="stats-percentage">2022-01-05</span>
+                        <span class="stats-percentage" id='logs-from'>0000-00-00</span>
                     </div>
                 </div>
             </div>
@@ -82,24 +82,12 @@
                             <th scope="col">Date Time</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody id='btn-log-tbl'>
                         <tr>
-                            <th scope="row">1</th>
-                            <td>node_1</td>
-                            <td>Bulb is on</td>
-                            <td>2022-05-01 15:14:54</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">2</th>
-                            <td>node_1</td>
-                            <td>Bulb is on</td>
-                            <td>2022-05-01 15:14:54</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">3</th>
-                            <td>node_1</td>
-                            <td>Bulb is on</td>
-                            <td>2022-05-01 15:14:54</td>
+                            <th scope="row">0</th>
+                            <td>No Result</td>
+                            <td>No Result</td>
+                            <td>No Result</td>
                         </tr>
                     </tbody>
                 </table>
@@ -124,24 +112,12 @@
                             <th scope="col">Date Time</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody id='presure-log-tbl'>
                         <tr>
-                            <th scope="row">1</th>
-                            <td>node_1</td>
-                            <td>25-50%</td>
-                            <td>2022-05-01 15:14:54</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">2</th>
-                            <td>node_548</td>
-                            <td>25-50%</td>
-                            <td>2022-05-01 15:14:54</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">3</th>
-                            <td>node_1</td>
-                            <td>75-100%</td>
-                            <td>2022-05-01 15:14:54</td>
+                            <th scope="row">0</th>
+                            <td>No Result</td>
+                            <td>No Result</td>
+                            <td>No Result</td>
                         </tr>
                     </tbody>
                 </table>
@@ -151,8 +127,108 @@
 </div>
 
 
+@endsection
+
+
+@section('javascript')
+
+<script>
+
+    jQuery(document).ready(function($){
+
+
+        function formatDate(get_date){
+
+            if(get_date){
+                var date_list = get_date.split('T');
+
+                var date = date_list[0];
+                var time = date_list[1].split('.')[0];
+                return date + " " + time;
+            }
+        }
+
+        function getData(){
+            var ajaxurl = "{{ route('dashboard.live') }}";
+            var type    = 'GET';
+
+            $.ajax({
+                type: type,
+                url: ajaxurl,
+                dataType: 'json',
+                success: function (data) {
+                    // console.log(data);
+
+                    $('#btn-today-log').text(data['button_stat']['today']);
+                    $('#btn-total-log').text(data['button_stat']['sum']);
+
+                    $('#pressure-today-log').text(data['presure_stat']['today']);
+                    $('#pressure-total-log').text(data['presure_stat']['sum']);
+
+                    $('#total-logs').text(data['total']['sum']);
+                    $('#logs-from').text(data['total']['from']);
+
+                    // BUTTON LOG
+
+                    var button_log = data['button_log'];
+                    var button_tbl = '';
+
+                    // id: 19, arduino_name: "node_1", presure_value: "245",
+
+                    for(var i = 0; i < button_log.length; i++){
+                        button_tbl += '<tr>';
+
+                        button_tbl += '<td>' + button_log[i]['id'] + '</td>';
+                        button_tbl += '<td>' + button_log[i]['arduino_name'] + '</td>';
+                        button_tbl += '<td>' + button_log[i]['button_status'] + '</td>';
+                        button_tbl += '<td>' + formatDate(button_log[i]['created_at']) + '</td>';
+
+                        button_tbl += '</tr>';
+                        formatDate(button_log[i]['created_at']);
+                    }
+                    $('#btn-log-tbl').html(button_tbl);
+
+                    var presure_log = data['presure_log'];
+                    var presure_tbl = '';
+
+                    for(var i = 0; i < presure_log.length; i++){
+                        presure_tbl += '<tr>';
+
+                        presure_tbl += '<td>' + presure_log[i]['id'] + '</td>';
+                        presure_tbl += '<td>' + presure_log[i]['arduino_name'] + '</td>';
+                        presure_tbl += '<td>' + presure_log[i]['presure_value'] + '</td>';
+                        presure_tbl += '<td>' + formatDate(presure_log[i]['created_at']) + '</td>';
+
+                        presure_tbl += '</tr>';
+
+                    }
+
+                    $('#presure-log-tbl').html(presure_tbl);
 
 
 
 
+                    // var todo = '<tr id="todo' + data.id + '"><td>' + data.id + '</td><td>' + data.title + '</td><td>' + data.description + '</td>';
+                    // if (state == "add") {
+                    //     jQuery('#todo-list').append(todo);
+                    // } else {
+                    //     jQuery("#todo" + todo_id).replaceWith(todo);
+                    // }
+                    // jQuery('#myForm').trigger("reset");
+                    // jQuery('#formModal').modal('hide')
+                },
+                error: function (data) {
+                    console.log(data);
+                }
+            });
+        }
+
+        // RUN FUNCTION ON LOAD
+        getData();
+
+        // RUN FUNCTION EVERY 10 sec
+        setInterval(getData, 1000);
+    });
+
+</script>
 @endsection

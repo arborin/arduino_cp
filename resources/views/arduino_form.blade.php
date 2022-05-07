@@ -88,10 +88,10 @@
         </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Close</button>
-            <form method="post" action="">
+            <form method="post" action="{{ route('arduino.delete') }}">
                 @csrf
                 <input type="hidden" name='id' value="{{ isset($arduino) ? $arduino['id'] : '' }}" class="form-control" id="id" placeholder="">
-                <button type="submit" class="btn btn-danger btn-sm" id="delete_registration">
+                <button type="submit" class="btn btn-danger btn-sm" id="delete_arduino">
                     Delete <i class="fas fa-trash-alt" aria-hidden="true"></i>
                 </button>
             </form>

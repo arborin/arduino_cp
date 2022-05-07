@@ -4,24 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\ButtonLogs;
 use Illuminate\Http\Request;
-<<<<<<< HEAD
-
-class ButtonLogController extends Controller
-{
-    public function buttonLog($arduino_name){
-
-    $btn_logs       = ButtonLogs::orderBy('id', 'desc')
-                                ->where('arduino_name', 'like', '%'.$arduino_name.'%')
-                                ->paginate(15);
-
-    return view('button_log',[
-        'arduino_name'  => $arduino_name,
-        'btn_logs'      => $btn_logs
-    ]);
-}
-
-
-=======
 use Illuminate\Support\Facades\DB;
 
 class ButtonLogController extends Controller
@@ -54,5 +36,4 @@ class ButtonLogController extends Controller
             'button_logs'   => $button_logs
         ]);
     }
->>>>>>> d4881665874791e20a2d1ae4d1fceb37b8d2e233
 }

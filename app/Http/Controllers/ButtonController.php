@@ -64,4 +64,15 @@ class ButtonController extends Controller
 
         return redirect(route('button.list'));
     }
+
+
+    public function buttonDelete(Request $request){
+
+        if( Auth()->user()->role == 'admin'){
+            ButtonStatuses::destroy($request->id);
+            return redirect(route('button.list'))->with('message', 'Success!');
+        }else{
+            return redirect(route('button.list'))->with('message', 'Error!');
+        }
+    }
 }

@@ -36,6 +36,12 @@
 
 <div class="row">
     <div class="col-lg-12">
+        <div class="mb-5">
+            <canvas id="bar-chart" height="70"></canvas>
+        </div>
+
+
+
         <div class="card easion-card">
             <div class="card-header">
                 <div class="easion-card-icon">
@@ -80,3 +86,80 @@
 
 
 @endsection
+
+@php
+    $last_log = $presure_logs->toArray();
+    $last_log = array_slice($last_log, -20);
+
+    $data = [];
+
+
+
+    // dd($last_log['data']);
+
+    foreach ($last_log['data'] as $log_row) {
+        $data[ $log_row->created_at ] = $log_row->presure_value;
+    }
+
+    // dd($data);
+
+@endphp
+
+@section('javascript')
+<script>
+    // Bar chart
+
+    var label_data = @json($data);
+    get_labels = Object.keys(label_data);
+    get_values = Object.values(label_data);
+    console.log(get_labels);
+    console.log(get_values);
+
+    new Chart(document.getElementById("bar-chart"), {
+        type: 'bar',
+        data: {
+        // labels: ["date 1", "date 1", "date 1", "date 1", "date 1"],
+        labels: get_labels,
+        datasets: [
+            {
+            label: "Last records",
+            // backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850"],
+            backgroundColor: "#3e95cd",
+            // data: [2478,5267,734,784,433]
+            data: get_values
+            }
+        ]
+        },
+        options: {
+            legend: { display: false },
+            title: {
+                display: true,
+                text: 'Predicted world population (millions) in 2050'
+            },
+            scales: {
+                x: {
+                    title: {
+                    display: true,
+                    text: 'Month'
+                    }
+                },
+                y: {
+                    title: {
+                    display: true,
+                    text: 'Value'
+                    },
+                    min: 0,
+                    max: 1200,
+                    ticks: {
+                    // forces step size to be 50 units
+                    stepSize: 50
+                    }
+                }
+                }
+        }
+    });
+
+</script>
+@endsection
+
+
