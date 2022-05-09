@@ -32,11 +32,16 @@ class DashboardController extends Controller
 
         // TOTAL
         $result['total']            = [];
-        $first_log                  = ButtonLogs::first()->get();
+
+        $first_log                  = ButtonLogs::first();
+        // if($first_log){
+        //     $first_log = $first_log->get();
+        // }
 
         $first_log_date             = 'Log Not Found';
 
-        if($first_log_date){
+        if( $first_log ){
+            $first_log              = $first_log->get();
             $first_log_date         = $first_log[0]->created_at->format('Y-m-d');
         }
 
